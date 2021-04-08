@@ -1,0 +1,24 @@
+{
+  "dogs": [
+    {
+      "id": 1,
+      "name": "Rex",
+      "breed": "golden retriever"
+    },
+    {
+      "id": 2,
+      "name": "Spot",
+      "breed": "dalmation"
+    },
+    {
+      "id": 3,
+      "name": "Cerberus",
+      "breed": "hellhound"
+    },
+    {
+      "id": 4,
+      "name": "Snoopy",
+      "breed": "beagle"
+    }
+  ]
+}

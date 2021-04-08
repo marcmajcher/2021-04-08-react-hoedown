@@ -1,25 +1,60 @@
-import logo from './logo.svg';
 import './App.css';
+import { Component } from 'react';
+import DogList from './DogList';
+import Home from './Home';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const dogsURL = 'http://localhost:3000/dogs';
+
+export default class App extends Component {
+  state = {
+    dogs: [],
+    filterString: '',
+    showDogs: true,
+  };
+
+  componentDidMount() {
+    console.log('ComponentDidMount : fetching');
+
+    fetch(dogsURL)
+      .then((res) => res.json())
+      .then((json) => this.handleDogs(json));
+  }
+
+  handleDogs(dogs) {
+    console.log(' in handleDogs');
+    console.log(dogs);
+
+    this.setState({ dogs });
+  }
+
+  render() {
+    console.log('Rendering');
+
+    return (
+      <Router>
+        <div className="App">
+          <nav>
+            <Link to="/">Home</Link> | <Link to="/list">List</Link>
+          </nav>
+
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/list">
+              <DogList
+                dogs={this.state.dogs}
+                filterString={this.state.filterString}
+                showDogs={this.state.showDogs}
+                setFilterString={(filterString) =>
+                  this.setState({ filterString })
+                }
+              />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    );
+  }
 }
-
-export default App;
